@@ -13,10 +13,10 @@ pnpm add @jeansoft/cocos-atlas-tool
 ## 使用
 
 ```ts
-import { readFileSync } from "node:fs";
-import { parseAtlas } from "@jeansoft/cocos-atlas-tool";
+import { readFileSync } from 'node:fs';
+import { parseAtlas } from '@jeansoft/cocos-atlas-tool';
 
-const xml = readFileSync("sheep.plist", "utf-8");
+const xml = readFileSync('sheep.plist', 'utf-8');
 const atlas = parseAtlas(xml);
 
 console.log(atlas.metadata.textureFileName);
@@ -39,7 +39,7 @@ for (const frame of atlas.frames) {
 在浏览器 / 渲染进程中用 `parseAtlas` 解析 plist，再用 Canvas 裁剪：
 
 ```ts
-import { parseAtlas, cropFrameToCanvas } from "@jeansoft/cocos-atlas-tool";
+import { parseAtlas, cropFrameToCanvas } from '@jeansoft/cocos-atlas-tool';
 
 const atlas = parseAtlas(plistText);
 
@@ -65,24 +65,24 @@ document.body.appendChild(canvas as HTMLCanvasElement);
 从图集 png 中切割导出每个 SpriteFrame 为独立的 png 文件(基于 [sharp](https://sharp.pixelplumbing.com/)，仅 Node)：
 
 ```ts
-import { extractAtlasFromFile } from "@jeansoft/cocos-atlas-tool/node";
+import { extractAtlasFromFile } from '@jeansoft/cocos-atlas-tool/node';
 
-const files = await extractAtlasFromFile("车1/车1.plist", "out");
+const files = await extractAtlasFromFile('车1/车1.plist', 'out');
 console.log(`共导出 ${files.length} 张图片`);
 ```
 
 也可以手动控制数据来源：
 
 ```ts
-import { readFileSync } from "node:fs";
-import { parseAtlas } from "@jeansoft/cocos-atlas-tool";
-import { extractAtlas, extractFrame } from "@jeansoft/cocos-atlas-tool/node";
+import { readFileSync } from 'node:fs';
+import { parseAtlas } from '@jeansoft/cocos-atlas-tool';
+import { extractAtlas, extractFrame } from '@jeansoft/cocos-atlas-tool/node';
 
-const atlas = parseAtlas(readFileSync("车1/车1.plist", "utf-8"));
+const atlas = parseAtlas(readFileSync('车1/车1.plist', 'utf-8'));
 
-await extractAtlas("车1/车1.png", atlas, "out");
+await extractAtlas('车1/车1.png', atlas, 'out');
 
-const buffer = await extractFrame("车1/车1.png", atlas.frames[0]);
+const buffer = await extractFrame('车1/车1.png', atlas.frames[0]);
 ```
 
 导出行为：

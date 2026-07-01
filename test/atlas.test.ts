@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { parseAtlas } from "../src/atlas.js";
+import { describe, expect, it } from 'vitest';
+import { parseAtlas } from '../src/atlas.js';
 
 const FORMAT_3 = `<?xml version="1.0" encoding="UTF-8"?>
 <plist version="1.0">
@@ -67,36 +67,36 @@ const FORMAT_2 = `<?xml version="1.0" encoding="UTF-8"?>
 </dict>
 </plist>`;
 
-describe("parseAtlas", () => {
-  it("解析 format 3 图集", () => {
+describe('parseAtlas', () => {
+  it('解析 format 3 图集', () => {
     const atlas = parseAtlas(FORMAT_3);
     expect(atlas.metadata).toEqual({
       format: 3,
       size: { width: 512, height: 1024 },
-      textureFileName: "car.png",
-      realTextureFileName: "car.png"
+      textureFileName: 'car.png',
+      realTextureFileName: 'car.png',
     });
     expect(atlas.frames).toHaveLength(1);
     expect(atlas.frames[0]).toEqual({
-      name: "car_01.png",
+      name: 'car_01.png',
       frame: { x: 0, y: 453, width: 105, height: 84 },
       rotated: false,
       offset: { x: -3, y: -3 },
       trimmedSize: { width: 105, height: 84 },
-      sourceSize: { width: 181, height: 130 }
+      sourceSize: { width: 181, height: 130 },
     });
   });
 
-  it("解析 format 2 图集并处理旋转帧的裁剪尺寸", () => {
+  it('解析 format 2 图集并处理旋转帧的裁剪尺寸', () => {
     const atlas = parseAtlas(FORMAT_2);
     expect(atlas.metadata.format).toBe(2);
     expect(atlas.frames[0]).toEqual({
-      name: "a.png",
+      name: 'a.png',
       frame: { x: 10, y: 20, width: 30, height: 40 },
       rotated: true,
       offset: { x: 1, y: -2 },
       trimmedSize: { width: 40, height: 30 },
-      sourceSize: { width: 50, height: 60 }
+      sourceSize: { width: 50, height: 60 },
     });
   });
 });

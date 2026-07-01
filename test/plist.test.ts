@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { parsePlist } from "../src/plist.js";
+import { describe, expect, it } from 'vitest';
+import { parsePlist } from '../src/plist.js';
 
 const XML = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -28,20 +28,20 @@ const XML = `<?xml version="1.0" encoding="UTF-8"?>
 </dict>
 </plist>`;
 
-describe("parsePlist", () => {
-  it("解析各种类型并保持 dict 键值配对", () => {
+describe('parsePlist', () => {
+  it('解析各种类型并保持 dict 键值配对', () => {
     expect(parsePlist(XML)).toEqual({
-      name: "hello",
+      name: 'hello',
       count: 3,
       ratio: 1.5,
       enabled: true,
       disabled: false,
-      list: ["a", "b"],
-      nested: { x: 1 }
+      list: ['a', 'b'],
+      nested: { x: 1 },
     });
   });
 
-  it("缺少 plist 根节点时抛错", () => {
-    expect(() => parsePlist("<foo/>")).toThrow();
+  it('缺少 plist 根节点时抛错', () => {
+    expect(() => parsePlist('<foo/>')).toThrow();
   });
 });

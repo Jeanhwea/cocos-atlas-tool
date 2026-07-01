@@ -1,4 +1,4 @@
-import type { Point, Rect, Size } from "./types.js";
+import type { Point, Rect, Size } from './types.js';
 
 const NUMBER_PATTERN = /-?\d+(?:\.\d+)?/g;
 

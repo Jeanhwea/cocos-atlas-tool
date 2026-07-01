@@ -1,22 +1,22 @@
-import { parsePoint, parseRect, parseSize } from "./geometry.js";
-import { parsePlist, type PlistValue } from "./plist.js";
-import type { Atlas, AtlasFrame, AtlasMetadata, Rect, Size } from "./types.js";
+import { parsePoint, parseRect, parseSize } from './geometry.js';
+import { parsePlist, type PlistValue } from './plist.js';
+import type { Atlas, AtlasFrame, AtlasMetadata, Rect, Size } from './types.js';
 
 type PlistDict = Record<string, PlistValue>;
 
 function asDict(value: PlistValue | undefined): PlistDict {
-  if (value && typeof value === "object" && !Array.isArray(value)) {
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
     return value as PlistDict;
   }
   return {};
 }
 
 function asString(value: PlistValue | undefined): string {
-  return typeof value === "string" ? value : "";
+  return typeof value === 'string' ? value : '';
 }
 
 function asNumber(value: PlistValue | undefined): number {
-  return typeof value === "number" ? value : Number(value ?? 0);
+  return typeof value === 'number' ? value : Number(value ?? 0);
 }
 
 function asBoolean(value: PlistValue | undefined): boolean {
@@ -24,7 +24,7 @@ function asBoolean(value: PlistValue | undefined): boolean {
 }
 
 function parseFrameEntry(name: string, raw: PlistDict): AtlasFrame {
-  if ("textureRect" in raw) {
+  if ('textureRect' in raw) {
     const frame = parseRect(asString(raw.textureRect));
     const rotated = asBoolean(raw.textureRotated);
     const offset = parsePoint(asString(raw.spriteOffset));
@@ -33,14 +33,15 @@ function parseFrameEntry(name: string, raw: PlistDict): AtlasFrame {
     return { name, frame, rotated, offset, trimmedSize, sourceSize };
   }
 
-  if ("frame" in raw) {
+  if ('frame' in raw) {
     const frame = parseRect(asString(raw.frame));
     const rotated = asBoolean(raw.rotated);
     const offset = parsePoint(asString(raw.offset));
     const sourceSize = parseSize(asString(raw.sourceSize));
-    const trimmedSize = "sourceColorRect" in raw
-      ? sizeFromRect(parseRect(asString(raw.sourceColorRect)))
-      : sizeFromFrame(frame, rotated);
+    const trimmedSize =
+      'sourceColorRect' in raw
+        ? sizeFromRect(parseRect(asString(raw.sourceColorRect)))
+        : sizeFromFrame(frame, rotated);
     return { name, frame, rotated, offset, trimmedSize, sourceSize };
   }
 
@@ -48,12 +49,12 @@ function parseFrameEntry(name: string, raw: PlistDict): AtlasFrame {
     x: asNumber(raw.x),
     y: asNumber(raw.y),
     width: asNumber(raw.width),
-    height: asNumber(raw.height)
+    height: asNumber(raw.height),
   };
   const offset = { x: asNumber(raw.offsetX), y: asNumber(raw.offsetY) };
   const sourceSize: Size = {
     width: asNumber(raw.originalWidth),
-    height: asNumber(raw.originalHeight)
+    height: asNumber(raw.originalHeight),
   };
   return {
     name,
@@ -61,7 +62,7 @@ function parseFrameEntry(name: string, raw: PlistDict): AtlasFrame {
     rotated: false,
     offset,
     trimmedSize: { width: frame.width, height: frame.height },
-    sourceSize
+    sourceSize,
   };
 }
 
@@ -80,9 +81,7 @@ function parseMetadata(raw: PlistDict): AtlasMetadata {
     format: asNumber(raw.format),
     size: parseSize(asString(raw.size)),
     textureFileName: asString(raw.textureFileName),
-    realTextureFileName: raw.realTextureFileName
-      ? asString(raw.realTextureFileName)
-      : undefined
+    realTextureFileName: raw.realTextureFileName ? asString(raw.realTextureFileName) : undefined,
   };
 }
 
@@ -90,7 +89,7 @@ export function parseAtlas(xml: string): Atlas {
   const root = asDict(parsePlist(xml));
   const framesDict = asDict(root.frames);
   const frames: AtlasFrame[] = Object.keys(framesDict).map((name) =>
-    parseFrameEntry(name, asDict(framesDict[name]))
+    parseFrameEntry(name, asDict(framesDict[name])),
   );
   const metadata = parseMetadata(asDict(root.metadata));
   return { frames, metadata };
