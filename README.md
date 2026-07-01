@@ -25,10 +25,42 @@ for (const frame of atlas.frames) {
 }
 ```
 
+## 导出单张图片
+
+从图集 png 中切割导出每个 SpriteFrame 为独立的 png 文件(基于 [sharp](https://sharp.pixelplumbing.com/)，仅支持 Node 环境）：
+
+```ts
+import { extractAtlasFromFile } from "@jeansoft/cocos-atlas-tool";
+
+const files = await extractAtlasFromFile("车1/车1.plist", "out");
+console.log(`共导出 ${files.length} 张图片`);
+```
+
+也可以手动控制数据来源：
+
+```ts
+import { readFileSync } from "node:fs";
+import { parseAtlas, extractAtlas, extractFrame } from "@jeansoft/cocos-atlas-tool";
+
+const atlas = parseAtlas(readFileSync("车1/车1.plist", "utf-8"));
+
+await extractAtlas("车1/车1.png", atlas, "out");
+
+const buffer = await extractFrame("车1/车1.png", atlas.frames[0]);
+```
+
+导出行为：
+
+- 默认 `restoreOriginalSize: true`，会把裁剪后的图片按 `offset` 还原到原始 `sourceSize` 尺寸(带透明边距)。设为 `false` 则只导出图集中裁剪后的实际像素。
+- 自动处理 `rotated` 旋转帧，导出时会转回正确方向。
+
 ## API
 
-- `parseAtlas(xml: string): Atlas` 解析图集 plist 文本为结构化的 `Atlas` 对象。
-- `parsePlist(xml: string): PlistValue` 将 Apple plist XML 解析为普通 JS 值。
+- `parseAtlas(xml): Atlas` 解析图集 plist 文本为结构化的 `Atlas` 对象。
+- `extractAtlasFromFile(plistPath, outDir, options?)` 读取 plist 与 png 并批量导出，返回输出文件路径数组。
+- `extractAtlas(image, atlas, outDir, options?)` 用已解析的 `Atlas` 批量导出，`image` 支持文件路径或 `Buffer`。
+- `extractFrame(image, frame, options?)` 导出单个帧，返回 png `Buffer`。
+- `parsePlist(xml): PlistValue` 将 Apple plist XML 解析为普通 JS 值。
 - `parseRect / parseSize / parsePoint` 解析 cocos2d-x 的几何字符串，如 `{{0,0},{100,100}}`。
 
 ## 数据结构
