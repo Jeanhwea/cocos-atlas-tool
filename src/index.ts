@@ -3,8 +3,8 @@ export { parsePlist, type PlistValue } from "./plist.js";
 export { parsePoint, parseSize, parseRect } from "./geometry.js";
 export { parseAtlas } from "./atlas.js";
 export {
-  extractFrame,
-  extractAtlas,
-  extractAtlasFromFile,
-  type ExtractOptions
-} from "./extract.js";
+  frameRegion,
+  cropFrameToCanvas,
+  type CanvasImageSource,
+  type CropOptions
+} from "./canvas.js";
