@@ -1,5 +1,8 @@
 # @jeansoft/cocos-atlas-tool
 
+[![npm version](https://img.shields.io/npm/v/@jeansoft/cocos-atlas-tool.svg)](https://www.npmjs.com/package/@jeansoft/cocos-atlas-tool)
+[![license](https://img.shields.io/npm/l/@jeansoft/cocos-atlas-tool.svg)](./LICENSE)
+
 解析 [Cocos Creator 图集(Atlas)](https://docs.cocos.com/creator/3.8/manual/zh/asset/atlas.html) 资源的工具库。
 
 Cocos Creator 的图集资源由 `plist` 和 `png` 文件组成，`plist` 使用 cocos2d-x 格式索引图集中每个 `SpriteFrame` 的位置信息。本库负责将 `plist` 文件解析为结构化数据，兼容 cocos2d-x 的 format 0/1/2/3。
@@ -130,6 +133,8 @@ interface AtlasFrame {
 pnpm install
 pnpm build
 pnpm typecheck
+pnpm test
+pnpm format
 ```
 
 ## License
