@@ -24,24 +24,24 @@ function asBoolean(value: PlistValue | undefined): boolean {
 }
 
 function parseFrameEntry(name: string, raw: PlistDict): AtlasFrame {
-  if ("frame" in raw) {
-    const frame = parseRect(asString(raw.frame));
-    const rotated = asBoolean(raw.rotated);
-    const offset = parsePoint(asString(raw.offset));
-    const sourceColorRect = "sourceColorRect" in raw
-      ? parseRect(asString(raw.sourceColorRect))
-      : { x: 0, y: 0, width: frame.width, height: frame.height };
-    const sourceSize = parseSize(asString(raw.sourceSize));
-    return { name, frame, rotated, offset, sourceColorRect, sourceSize };
-  }
-
   if ("textureRect" in raw) {
     const frame = parseRect(asString(raw.textureRect));
     const rotated = asBoolean(raw.textureRotated);
     const offset = parsePoint(asString(raw.spriteOffset));
-    const sourceColorRect = parseRect(asString(raw.spriteSourceSize));
-    const sourceSize = parseSize(asString(raw.spriteSize));
-    return { name, frame, rotated, offset, sourceColorRect, sourceSize };
+    const trimmedSize = parseSize(asString(raw.spriteSize));
+    const sourceSize = parseSize(asString(raw.spriteSourceSize));
+    return { name, frame, rotated, offset, trimmedSize, sourceSize };
+  }
+
+  if ("frame" in raw) {
+    const frame = parseRect(asString(raw.frame));
+    const rotated = asBoolean(raw.rotated);
+    const offset = parsePoint(asString(raw.offset));
+    const sourceSize = parseSize(asString(raw.sourceSize));
+    const trimmedSize = "sourceColorRect" in raw
+      ? sizeFromRect(parseRect(asString(raw.sourceColorRect)))
+      : sizeFromFrame(frame, rotated);
+    return { name, frame, rotated, offset, trimmedSize, sourceSize };
   }
 
   const frame: Rect = {
@@ -60,9 +60,19 @@ function parseFrameEntry(name: string, raw: PlistDict): AtlasFrame {
     frame,
     rotated: false,
     offset,
-    sourceColorRect: { x: 0, y: 0, width: frame.width, height: frame.height },
+    trimmedSize: { width: frame.width, height: frame.height },
     sourceSize
   };
+}
+
+function sizeFromRect(rect: Rect): Size {
+  return { width: rect.width, height: rect.height };
+}
+
+function sizeFromFrame(frame: Rect, rotated: boolean): Size {
+  return rotated
+    ? { width: frame.height, height: frame.width }
+    : { width: frame.width, height: frame.height };
 }
 
 function parseMetadata(raw: PlistDict): AtlasMetadata {

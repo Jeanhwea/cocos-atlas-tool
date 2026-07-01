@@ -20,7 +20,7 @@ export interface AtlasFrame {
   frame: Rect;
   rotated: boolean;
   offset: Point;
-  sourceColorRect: Rect;
+  trimmedSize: Size;
   sourceSize: Size;
 }
 
