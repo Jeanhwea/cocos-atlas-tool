@@ -42,6 +42,14 @@
   ],
   "author": "jeansoft",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jeanhwea/cocos-atlas-tool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jeanhwea/cocos-atlas-tool/issues"
+  },
+  "homepage": "https://github.com/Jeanhwea/cocos-atlas-tool#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
