@@ -1,6 +1,6 @@
-import { parsePoint, parseRect, parseSize } from './geometry.js';
+import { parsePoint, parseRect, parseSize } from '../core/geometry.js';
 import { parsePlist, type PlistValue } from './plist.js';
-import type { Atlas, AtlasFrame, AtlasMetadata, Rect, Size } from './types.js';
+import type { Atlas, AtlasFrame, AtlasMetadata, Rect, Size } from '../core/types.js';
 
 type PlistDict = Record<string, PlistValue>;
 

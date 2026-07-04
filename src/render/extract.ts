@@ -1,9 +1,9 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import sharp from 'sharp';
-import { parseAtlas } from './atlas.js';
-import { frameRegion, restorePlacement } from './layout.js';
-import type { Atlas, AtlasFrame } from './types.js';
+import { parseAtlas } from '../parser/atlas.js';
+import { frameRegion, restorePlacement } from '../core/layout.js';
+import type { Atlas, AtlasFrame } from '../core/types.js';
 
 export interface ExtractOptions {
   restoreOriginalSize?: boolean;

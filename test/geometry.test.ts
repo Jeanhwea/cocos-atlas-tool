@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parsePoint, parseRect, parseSize } from '../src/geometry.js';
+import { parsePoint, parseRect, parseSize } from '../src/core/geometry.js';
 
 describe('geometry', () => {
   it('parsePoint 解析带负数的坐标', () => {

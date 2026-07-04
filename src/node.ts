@@ -3,4 +3,4 @@ export {
   extractAtlas,
   extractAtlasFromFile,
   type ExtractOptions,
-} from './extract.js';
+} from './render/extract.js';

@@ -1,5 +1,5 @@
-import { frameRegion, restorePlacement } from './layout.js';
-import type { AtlasFrame } from './types.js';
+import { frameRegion, restorePlacement } from '../core/layout.js';
+import type { AtlasFrame } from '../core/types.js';
 
 export type CanvasImageSource =
   HTMLImageElement | HTMLCanvasElement | ImageBitmap | OffscreenCanvas;

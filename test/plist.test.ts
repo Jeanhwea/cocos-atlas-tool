@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parsePlist } from '../src/plist.js';
+import { parsePlist } from '../src/parser/plist.js';
 
 const XML = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
