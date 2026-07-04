@@ -1,4 +1,5 @@
-import type { AtlasFrame, Rect } from './types.js';
+import { frameRegion, restorePlacement } from './layout.js';
+import type { AtlasFrame } from './types.js';
 
 export type CanvasImageSource =
   HTMLImageElement | HTMLCanvasElement | ImageBitmap | OffscreenCanvas;
@@ -8,16 +9,6 @@ export interface CropOptions {
 }
 
 type AnyCanvas = HTMLCanvasElement | OffscreenCanvas;
-
-export function frameRegion(frame: AtlasFrame): Rect {
-  const { width, height } = frame.trimmedSize;
-  return {
-    x: frame.frame.x,
-    y: frame.frame.y,
-    width: frame.rotated ? height : width,
-    height: frame.rotated ? width : height,
-  };
-}
 
 function createCanvas(width: number, height: number): AnyCanvas {
   if (typeof OffscreenCanvas !== 'undefined') {
@@ -81,8 +72,7 @@ export function cropFrameToCanvas(
 
   const canvas = createCanvas(frame.sourceSize.width, frame.sourceSize.height);
   const ctx = context2d(canvas);
-  const left = Math.round((frame.sourceSize.width - frame.trimmedSize.width) / 2 + frame.offset.x);
-  const top = Math.round((frame.sourceSize.height - frame.trimmedSize.height) / 2 - frame.offset.y);
-  ctx.drawImage(upright as CanvasImageSource, left, top);
+  const { x, y } = restorePlacement(frame);
+  ctx.drawImage(upright as CanvasImageSource, x, y);
   return canvas;
 }

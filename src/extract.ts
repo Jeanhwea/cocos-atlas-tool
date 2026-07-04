@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import sharp from 'sharp';
 import { parseAtlas } from './atlas.js';
+import { frameRegion, restorePlacement } from './layout.js';
 import type { Atlas, AtlasFrame } from './types.js';
 
 export interface ExtractOptions {
@@ -14,11 +15,6 @@ async function loadBuffer(image: ImageSource): Promise<Buffer> {
   return typeof image === 'string' ? readFile(image) : image;
 }
 
-function regionSize(frame: AtlasFrame): { width: number; height: number } {
-  const { width, height } = frame.trimmedSize;
-  return frame.rotated ? { width: height, height: width } : { width, height };
-}
-
 export async function extractFrame(
   image: ImageSource,
   frame: AtlasFrame,
@@ -26,11 +22,11 @@ export async function extractFrame(
 ): Promise<Buffer> {
   const { restoreOriginalSize = true } = options;
   const buffer = await loadBuffer(image);
-  const region = regionSize(frame);
+  const region = frameRegion(frame);
 
   let sprite = sharp(buffer).extract({
-    left: frame.frame.x,
-    top: frame.frame.y,
+    left: region.x,
+    top: region.y,
     width: region.width,
     height: region.height,
   });
@@ -45,8 +41,7 @@ export async function extractFrame(
     return spriteBuffer;
   }
 
-  const left = Math.round((frame.sourceSize.width - frame.trimmedSize.width) / 2 + frame.offset.x);
-  const top = Math.round((frame.sourceSize.height - frame.trimmedSize.height) / 2 - frame.offset.y);
+  const { x: left, y: top } = restorePlacement(frame);
 
   return sharp({
     create: {
