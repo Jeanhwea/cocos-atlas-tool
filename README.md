@@ -1,7 +1,7 @@
 # @jeansoft/cocos-atlas-tool
 
 [![npm version](https://img.shields.io/npm/v/@jeansoft/cocos-atlas-tool.svg)](https://www.npmjs.com/package/@jeansoft/cocos-atlas-tool)
-[![license](https://img.shields.io/npm/l/@jeansoft/cocos-atlas-tool.svg)](./LICENSE)
+[![license](https://img.shields.io/npm/l/@jeansoft/cocos-atlas-tool.svg)](https://github.com/Jeanhwea/cocos-atlas-tool/blob/master/LICENSE)
 
 解析 [Cocos Creator 图集(Atlas)](https://docs.cocos.com/creator/3.8/manual/zh/asset/atlas.html) 的工具库，将 cocos2d-x 的 `plist` 解析为结构化数据，兼容 format 0/1/2/3。
 
@@ -50,7 +50,7 @@ document.body.appendChild(canvas as HTMLCanvasElement);
 ```ts
 import { extractAtlasFromFile } from '@jeansoft/cocos-atlas-tool/node';
 
-const files = await extractAtlasFromFile('车1/车1.plist', 'out');
+const files = await extractAtlasFromFile('车/车.plist', 'out');
 console.log(`共导出 ${files.length} 张图片`);
 ```
 
