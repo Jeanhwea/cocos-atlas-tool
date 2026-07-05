@@ -1,6 +1,6 @@
 {
   "name": "@jeansoft/cocos-atlas-tool",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "解析 Cocos Creator 图集(Atlas) plist 资源的工具库",
   "type": "module",
   "main": "./dist/index.cjs",
